@@ -19,6 +19,9 @@ Un Sudoku jugable con GUI donde podés:
 - **Python 3.x**
 - **SWI‑Prolog instalado y en el `PATH`** (obligatorio)
 
+## Imágenes
+![Interfaz Principal](/img/panel.png)
+
 ## Ejecución
 El punto de entrada del proyecto es:
 
