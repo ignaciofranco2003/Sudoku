@@ -20,7 +20,7 @@ Un Sudoku jugable con GUI donde podés:
 - **SWI‑Prolog instalado y en el `PATH`** (obligatorio)
 
 ## Imágenes
-![Interfaz Principal]([https://drive.google.com/file/d/1wrW0w19CcvfYl_wdmwBVgYz7pcFsYGeY/view?usp=sharing](https://drive.google.com/uc?export=view&id=1wrW0w19CcvfYl_wdmwBVgYz7pcFsYGeY))
+![Interfaz Principal](https://drive.google.com/uc?export=view&id=1wrW0w19CcvfYl_wdmwBVgYz7pcFsYGeY)
 
 ## Ejecución
 El punto de entrada del proyecto es:
