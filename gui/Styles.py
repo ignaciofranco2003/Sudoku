@@ -1,19 +1,26 @@
 from tkinter import ttk
 
 def apply_style(root):
-    style = ttk.Style(root)
+    style = ttk.Style(root) # Crea un objeto de estilo asociado a la ventana principal
     try:
         style.theme_use("clam")
     except Exception:
         pass
 
-    style.configure("Title.TLabel", font=("Segoe UI", 18, "bold"))
-    style.configure("Sub.TLabel", font=("Segoe UI", 10))
-    style.configure("Status.TLabel", font=("Segoe UI", 10, "italic"))
+    # ESTILOS DE TEXTOS -----------------------------------------------------------------------------
 
-    style.configure("Card.TFrame", background="#f6f7fb")
-    style.configure("Panel.TFrame", background="#ffffff")
+    style.configure("Title.TLabel", font=("Segoe UI", 18, "bold"))  # Título principal
+    style.configure("Sub.TLabel", font=("Segoe UI", 10))    # Subtítulo
+    style.configure("Status.TLabel", font=("Segoe UI", 10, "italic"))   # Mensajes
 
+    # CONTENEDORES -----------------------------------------------------------------------------
+
+    style.configure("Card.TFrame", background="#f6f7fb")    # Tarjeta donde se muestra el tablero
+    style.configure("Panel.TFrame", background="#ffffff")   # Panel lateral derecho
+
+    # TEXTOS DEL PANEL -----------------------------------------------------------------------------
+
+    # Título de secciones del panel
     style.configure(
         "PanelTitle.TLabel",
         font=("Segoe UI", 12, "bold"),
@@ -21,6 +28,7 @@ def apply_style(root):
         foreground="#111827"
     )
 
+    # Texto común dentro del panel
     style.configure(
         "PanelText.TLabel",
         background="#ffffff",
@@ -28,5 +36,7 @@ def apply_style(root):
         font=("Segoe UI", 9)
     )
 
-    style.configure("TLabelframe", background="#ffffff")
-    style.configure("TLabelframe.Label", background="#ffffff", font=("Segoe UI", 10, "bold"))
+    # GRUPOS -----------------------------------------------------------------------------
+
+    style.configure("TLabelframe", background="#ffffff")    # Estilo de los contenedores con título
+    style.configure("TLabelframe.Label", background="#ffffff", font=("Segoe UI", 10, "bold"))   # Estilo del texto del título

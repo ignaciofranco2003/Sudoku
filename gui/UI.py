@@ -6,44 +6,50 @@ from .Styles import apply_style
 
 class UI:
     def _build_ui(self):
-        apply_style(self.root)
+        apply_style(self.root)  # Aplicamos los estilos visuales definidos en Styles.py
 
+        # Contenedor principal externo
         outer = ttk.Frame(self.root, padding=14)
         outer.grid(row=0, column=0, sticky="nsew")
 
+        # Configuración de expansión del layout
         self.root.rowconfigure(0, weight=1)
         self.root.columnconfigure(0, weight=1)
         outer.rowconfigure(1, weight=1)
         outer.columnconfigure(0, weight=1)
 
-        # ================= HEADER =================
+        # HEADER -----------------------------------------------------------------------------
         header = ttk.Frame(outer)
         header.grid(row=0, column=0, sticky="ew")
 
+        # Título principal
         ttk.Label(header, text="Sudoku", style="Title.TLabel") \
             .grid(row=0, column=0, sticky="w")
 
+        # Subtítulo
         ttk.Label(
             header,
             text="Generar / validar / resolver",
             style="Sub.TLabel"
         ).grid(row=1, column=0, sticky="w", pady=(2, 0))
 
-        # ================= CONTENT =================
+        # CONTENT -----------------------------------------------------------------------------
         content = ttk.Frame(outer)
         content.grid(row=1, column=0, sticky="nsew", pady=(12, 0))
 
+        # Dos columnas: tablero (izq) y panel (der)
         content.columnconfigure(0, weight=0)
         content.columnconfigure(1, weight=0, minsize=PANEL_W)
         content.rowconfigure(0, weight=1)
 
-        # ================= IZQUIERDA (TABLERO) =================
+        # IZQUIERDA (TABLERO) -----------------------------------------------------------------------------
         left = ttk.Frame(content)
         left.grid(row=0, column=0, sticky="n")
 
         board_card = ttk.Frame(left, style="Card.TFrame", padding=12)
         board_card.grid(row=0, column=0, sticky="n")
 
+        # Canvas donde se dibuja la grilla del Sudoku
         self.canvas = tk.Canvas(
             board_card,
             width=CANVAS_W,
@@ -53,16 +59,17 @@ class UI:
         )
         self.canvas.grid(row=0, column=0)
 
+        # Se dibuja la grilla y se crean los campos de entrada
         self._draw_grid()
         self._build_entries()
 
-        # Click derecho: bloquear/desbloquear
+        # Click derecho: bloquear/desbloquear celda
         self.root.bind_all("<Button-3>", self._on_right_click, add="+")
 
         # Click izquierdo fuera del tablero: deseleccionar
         self.root.bind_all("<Button-1>", self._on_any_left_click, add="+")
 
-        # ================= DERECHA (PANEL) =================
+        # DERECHA (PANEL) -----------------------------------------------------------------------------
         right = ttk.Frame(content)
         right.grid(row=0, column=1, sticky="n", padx=(14, 0))
         right.columnconfigure(0, weight=1)
@@ -74,7 +81,7 @@ class UI:
         ttk.Label(panel, text="Acciones", style="PanelTitle.TLabel") \
             .grid(row=0, column=0, sticky="w")
 
-        # -------- Generación --------
+        # Generación ---------------------
         gen = ttk.Labelframe(panel, text="Generación", padding=18)
         gen.grid(row=1, column=0, sticky="ew", pady=(10, 0))
         gen.columnconfigure(0, weight=1)
@@ -88,7 +95,7 @@ class UI:
         ttk.Button(gen, text="Nuevo tablero vacío", command=self.on_nuevo_vacio) \
             .grid(row=2, column=0, sticky="ew", pady=(8, 0))
 
-        # -------- Juego --------
+        # Juego ---------------------
         play = ttk.Labelframe(panel, text="Juego", padding=10)
         play.grid(row=2, column=0, sticky="ew", pady=(10, 0))
         play.columnconfigure(0, weight=1)
@@ -105,7 +112,7 @@ class UI:
         ttk.Button(play, text="Completar", command=self.on_completar) \
             .grid(row=3, column=0, sticky="ew", pady=(8, 0))
 
-        # -------- Configuraciones --------
+        # Configuraciones ---------------------
         cfg = ttk.Labelframe(panel, text="Configuraciones", padding=10)
         cfg.grid(row=3, column=0, sticky="ew", pady=(10, 0))
         cfg.columnconfigure(1, weight=1)
@@ -148,13 +155,14 @@ class UI:
             ),
             add="+"
         )
-        # ================= STATUS =================
+        # STATUS -----------------------------------------------------------------------------
         status_bg = tk.Frame(panel, bg="#ffffff")
         status_bg.grid(row=4, column=0, sticky="ew", pady=(12, 0))
         status_bg.grid_propagate(False)
         status_bg.configure(height=54)
         status_bg.columnconfigure(0, weight=1)
 
+        # Etiqueta de estado para mensajes al usuario
         self.status = tk.Label(
             status_bg,
             text="Listo.",

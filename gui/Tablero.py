@@ -3,30 +3,34 @@ from .Variables import TAM, CELL, MARGIN, BOARD
 
 class Tablero:
     def _draw_grid(self):
+        # Coordenadas del borde del tablero
         x0 = MARGIN
         y0 = MARGIN
         x1 = MARGIN + BOARD
         y1 = MARGIN + BOARD
 
-        # borde externo
+        # Borde externo
         self.canvas.create_rectangle(x0, y0, x1, y1, outline="#111827", width=2, tags=("grid",))
 
-        # líneas internas
+        # Líneas internas (grilla)
         for i in range(1, TAM):
+            # Cada 3 líneas se dibuja más gruesa (separación de bloques 3x3)
             w = 2 if i % 3 == 0 else 1
             color = "#111827" if i % 3 == 0 else "#9CA3AF"
 
-            # vertical
+            # Línea vertical
             x = MARGIN + i * CELL
             self.canvas.create_line(x, y0, x, y1, fill=color, width=w, tags=("grid",))
 
-            # horizontal
+            # Línea horizontal
             y = MARGIN + i * CELL
             self.canvas.create_line(x0, y, x1, y, fill=color, width=w, tags=("grid",))
 
     def _build_entries(self):
+        # Configuración de validación: solo números del 1 al 9
         vcmd = (self.root.register(self._validate_cell), "%P")
 
+        # Se crean los 81 campos de entrada
         for i in range(TAM):
             for j in range(TAM):
                 e = tk.Entry(
@@ -46,14 +50,16 @@ class Tablero:
                 e.configure(
                     bg="#ffffff",
                     fg="#111827",
-                    disabledbackground="#dbeafe",   # celeste suave para fijos
-                    disabledforeground="#1d4ed8"    # azul fuerte para fijos
+                    disabledbackground="#dbeafe",   # Celeste suave para fijos
+                    disabledforeground="#1d4ed8"    # Azul fuerte para fijos
                 )
 
+                # Posicionamiento dentro del canvas
                 x = MARGIN + j * CELL + 1
                 y = MARGIN + i * CELL + 1
                 e.place(x=x + 8, y=y + 8, width=CELL - 16, height=CELL - 16)
 
+                # Se guarda la posición de cada Entry
                 self.entry_pos[e] = (i, j)
 
                 # Selección: resaltar fila/columna/celda
@@ -62,20 +68,23 @@ class Tablero:
 
                 self.entries[i][j] = e
 
-    # ---------- resaltado ----------
+    # Resaltado -----------------------------------------------------------------------------
     def _cell_bbox(self, i: int, j: int):
+        # Devuelve las coordenadas de una celda
         x = MARGIN + j * CELL + 1
         y = MARGIN + i * CELL + 1
         return x, y, x + CELL - 2, y + CELL - 2
 
     def _clear_highlight(self):
+        # Elimina el resaltado anterior
         self.canvas.delete("hl")
 
     def _highlight_selection(self, i: int, j: int):
+        # Resalta fila, columna y celda seleccionada
         self._clear_highlight()
 
-        row_col_fill = "#d1fae5"   # verde muy clarito
-        cell_fill = "#86efac"      # un poco más fuerte
+        row_col_fill = "#d1fae5"   # Verde muy clarito
+        cell_fill = "#86efac"      # Verde un poco más fuerte
 
         # Fila
         for jj in range(TAM):
@@ -91,9 +100,10 @@ class Tablero:
         x0, y0, x1, y1 = self._cell_bbox(i, j)
         self.canvas.create_rectangle(x0, y0, x1, y1, outline="", fill=cell_fill, tags=("hl",))
 
-        # highlight debajo de la grilla
+        # Resaltado debajo de la grilla
         self.canvas.tag_lower("hl", "grid")
 
     def _on_select(self, i: int, j: int):
+        # Guarda la celda seleccionada y actualiza el resaltado
         self.selected = (i, j)
         self._highlight_selection(i, j)
