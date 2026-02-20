@@ -24,16 +24,16 @@ La interacción se realiza mediante consultas dinámicas desde Python hacia el m
 - **Python:** 3.x
 - **SWI-Prolog:** Debe estar instalado y agregado a las variables de entorno (`PATH`).
 
-## Interfaz
-![Interfaz Principal](https://drive.google.com/uc?export=view&id=1wrW0w19CcvfYl_wdmwBVgYz7pcFsYGeY)
-- La interfaz está pensada para Windows y Tkinter.
-- No se priorizó estética visual sino claridad funcional.
-
 ## Instalación necesaria
 Instalar la librería necesaria para comunicar Python con Prolog:
    ```powershell
    pip install pyswip
    ```
+
+## Interfaz
+![Interfaz Principal](https://drive.google.com/uc?export=view&id=1wrW0w19CcvfYl_wdmwBVgYz7pcFsYGeY)
+- La interfaz está pensada para Windows y Tkinter.
+- No se priorizó estética visual sino claridad funcional.
 
 ## Ejecución
 El punto de entrada del proyecto es:
